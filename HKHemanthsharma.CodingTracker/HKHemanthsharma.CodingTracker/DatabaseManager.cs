@@ -3,7 +3,7 @@
 using Dapper;
 using HKHemanthsharma.CodingTracker.Models;
 using Microsoft.Data.SqlClient;
-using System.Configuration;
+
 
 namespace HKHemanthsharma.CodingTracker
 {
@@ -13,7 +13,7 @@ namespace HKHemanthsharma.CodingTracker
         public static string ConnectionString { get { return _connectionString; } }
         public DatabaseManager()
         {
-            _connectionString = ConfigurationManager.ConnectionStrings["sqlexpress2022"].ConnectionString;
+            _connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["sqlexpress2022"].ConnectionString;
         }
         public DatabaseManager(string connectionString)
         {

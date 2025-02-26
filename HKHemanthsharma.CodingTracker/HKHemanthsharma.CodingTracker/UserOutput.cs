@@ -30,7 +30,6 @@ namespace HKHemanthsharma.CodingTracker
             var properties = typeof(Codinglog).GetProperties();
             foreach (var property in properties)
             {
-                property.Name.ToString();
                 table.AddColumn(new TableColumn(property.Name));
             }
             int count = 1;

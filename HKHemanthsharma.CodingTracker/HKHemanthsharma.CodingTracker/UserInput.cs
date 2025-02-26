@@ -90,7 +90,7 @@ Enter '0' to return to main menu:");
             return targetdate;
         }
 
-        public static int codingreportchoice()
+        public static int CodingReportChoice()
         {
             Console.WriteLine(@"Enter '1' to get last 'N' days report:
 Enter '2' to get logs between any two dates:
@@ -105,7 +105,7 @@ Enter '4' to get all the logs:");
             }
             return userInput;
         }
-        public static int lastNDaysInput()
+        public static int LastNDaysInput()
         {
             Console.WriteLine("please enter the number of days report you want to see from today: ");
             int totalDays;

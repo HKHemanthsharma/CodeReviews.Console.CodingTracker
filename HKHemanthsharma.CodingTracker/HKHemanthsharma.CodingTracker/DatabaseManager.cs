@@ -99,34 +99,34 @@ end";
         public void UpdateLogForDate()
         {
             DateTime targetDate = UserInput.EnterDate();
-            List<codinglog> codinglogs;
+            List<Codinglog> Codinglogs;
             using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
                 conn.Open();
                 string query = @"select * from codingtimelog where DateofCoding=@date";
-                codinglogs = conn.Query<codinglog>(query, new { date = targetDate }).ToList();
+                Codinglogs = conn.Query<Codinglog>(query, new { date = targetDate }).ToList();
                 string updatequery = "";
                 int update_id = -1;
 
-                if (codinglogs.Count > 1)
+                if (Codinglogs.Count > 1)
                 {
                     Console.WriteLine($"There are multiple logs for the {targetDate} date");
-                    UserOutput.DisplayCodinglogListwithSerialNum(codinglogs);
-                    Console.WriteLine($"please enter the S.No of codinglog to be modified : Makesure you choose between 1 to {codinglogs.Count}");
-                    int choice = UserInput.SnoSelect(codinglogs.Count);
-                    update_id = codinglogs[choice].Coding_Id;
+                    UserOutput.DisplayCodinglogListwithSerialNum(Codinglogs);
+                    Console.WriteLine($"please enter the S.No of Codinglog to be modified : Makesure you choose between 1 to {Codinglogs.Count}");
+                    int choice = UserInput.SnoSelect(Codinglogs.Count);
+                    update_id = Codinglogs[choice].Coding_Id;
 
                 }
                 else
                 {
-                    if (codinglogs.Count == 0)
+                    if (Codinglogs.Count == 0)
                     {
                         Console.WriteLine("No logs found for this date!");
                         return;
                     }
                     else
                     {
-                        update_id = codinglogs[0].Coding_Id;
+                        update_id = Codinglogs[0].Coding_Id;
                     }
                 }
                 DateTime startTime = UserInput.EnterStartTime();
@@ -152,7 +152,7 @@ end";
         }
         public void DeleteLogForDate()
         {
-            List<codinglog> codinglogs = new List<codinglog>();
+            List<Codinglog> Codinglogs = new List<Codinglog>();
             DateTime targetDate = UserInput.EnterDate();
             using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
@@ -160,20 +160,20 @@ end";
                 {
                     conn.Open();
                     string query = @"select * from codingtimelog where DateofCoding=@date";
-                    codinglogs = conn.Query<codinglog>(query, new { date = targetDate }).ToList();
+                    Codinglogs = conn.Query<Codinglog>(query, new { date = targetDate }).ToList();
                     string deletequery = "";
                     int delete_id = -1;
 
-                    if (codinglogs.Count > 1)
+                    if (Codinglogs.Count > 1)
                     {
                         Console.WriteLine($"There are multiple logs for the {targetDate} date");
                         Console.WriteLine("Press 'y' or 'Y' to delete all logs: else press any other key");
                         if (Console.ReadLine().ToLower() != "y")
                         {
-                            UserOutput.DisplayCodinglogListwithSerialNum(codinglogs);
-                            Console.WriteLine($"please enter the S.No of the codinglog to be Deleted:  Makesure you choose between 1 to {codinglogs.Count}");
-                            int choice = UserInput.SnoSelect(codinglogs.Count);
-                            delete_id = codinglogs[choice].Coding_Id;
+                            UserOutput.DisplayCodinglogListwithSerialNum(Codinglogs);
+                            Console.WriteLine($"please enter the S.No of the Codinglog to be Deleted:  Makesure you choose between 1 to {Codinglogs.Count}");
+                            int choice = UserInput.SnoSelect(Codinglogs.Count);
+                            delete_id = Codinglogs[choice].Coding_Id;
                             deletequery = "delete from codingtimelog where Coding_Id=@deleteid";
                         }
                         else
@@ -184,14 +184,14 @@ end";
                     }
                     else
                     {
-                        if (codinglogs.Count == 0)
+                        if (Codinglogs.Count == 0)
                         {
                             Console.WriteLine("No logs found for this date!");
                             return;
                         }
                         else
                         {
-                            delete_id = codinglogs[0].Coding_Id;
+                            delete_id = Codinglogs[0].Coding_Id;
                             deletequery = "delete from codingtimelog where Coding_Id=@deleteid";
                         }
                     }
@@ -218,16 +218,16 @@ end";
         }
         public void ViewReports()
         {
-            int reporttype = UserInput.codingreportchoice();
+            int reporttype = UserInput.CodingReportChoice();
             string Query = "";
-            List<codinglog> codinglogs = new List<codinglog>();
+            List<Codinglog> Codinglogs = new List<Codinglog>();
             using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
                 if (reporttype == 1)
                 {
-                    int totaldays = UserInput.lastNDaysInput();
+                    int totaldays = UserInput.LastNDaysInput();
                     Query = $"select * from codingtimelog where DateofCoding>=getdate()-{totaldays}";
-                    codinglogs = conn.Query<codinglog>(Query).ToList();
+                    Codinglogs = conn.Query<Codinglog>(Query).ToList();
 
                 }
                 else if (reporttype == 2)
@@ -237,21 +237,21 @@ end";
                     if (startDate > endDate)
                         (startDate, endDate) = (endDate, startDate);
                     Query = $"select * from codingtimelog where DateofCoding between @start and @end";
-                    codinglogs = conn.Query<codinglog>(Query, new { start = startDate, end = endDate }).ToList();
+                    Codinglogs = conn.Query<Codinglog>(Query, new { start = startDate, end = endDate }).ToList();
                 }
                 else if (reporttype == 3)
                 {
                     DateTime targetdate = UserInput.EnterDate();
                     Query = $"select * from codingtimelog where DateofCoding=@date";
-                    codinglogs = conn.Query<codinglog>(Query, new { date = targetdate }).ToList();
+                    Codinglogs = conn.Query<Codinglog>(Query, new { date = targetdate }).ToList();
                 }
                 else
                 {
                     Query = "select * from codingtimelog order by Coding_Id";
-                    codinglogs = conn.Query<codinglog>(Query).ToList();
+                    Codinglogs = conn.Query<Codinglog>(Query).ToList();
                 }
             }
-            UserOutput.DisplayCodinglogList(codinglogs);
+            UserOutput.DisplayCodinglogList(Codinglogs);
         }
     }
 }

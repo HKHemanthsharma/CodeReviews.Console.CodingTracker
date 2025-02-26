@@ -2,7 +2,7 @@
 
 namespace HKHemanthsharma.CodingTracker.Models
 {
-    public class codinglog
+    public class Codinglog
     {
         public int Coding_Id { get; set; }
         public DateTime DateofCoding { get; set; }

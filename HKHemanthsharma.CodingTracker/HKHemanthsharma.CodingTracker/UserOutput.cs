@@ -6,16 +6,15 @@ namespace HKHemanthsharma.CodingTracker
 {
     public class UserOutput
     {
-        public static void DisplayCodinglogList(List<codinglog> logs)
+        public static void DisplayCodinglogList(List<Codinglog> logs)
         {
             var table = new Table();
-            var properties = typeof(codinglog).GetProperties();
+            var properties = typeof(Codinglog).GetProperties();
             foreach (var property in properties)
             {
-                property.Name.ToString();
                 table.AddColumn(new TableColumn(property.Name));
             }
-            foreach (codinglog log in logs)
+            foreach (Codinglog log in logs)
             {
 
                 table.AddRow(log.Coding_Id.ToString(), log.DateofCoding.ToString(), log.StartTime.ToString(), log.EndTime.ToString(), log.Duration.ToString());
@@ -24,18 +23,18 @@ namespace HKHemanthsharma.CodingTracker
             AnsiConsole.Write(table);
 
         }
-        public static void DisplayCodinglogListwithSerialNum(List<codinglog> logs)
+        public static void DisplayCodinglogListwithSerialNum(List<Codinglog> logs)
         {
             var table = new Table();
             table.AddColumn("S.no");
-            var properties = typeof(codinglog).GetProperties();
+            var properties = typeof(Codinglog).GetProperties();
             foreach (var property in properties)
             {
                 property.Name.ToString();
                 table.AddColumn(new TableColumn(property.Name));
             }
             int count = 1;
-            foreach (codinglog log in logs)
+            foreach (Codinglog log in logs)
             {
 
                 table.AddRow(count.ToString(), log.Coding_Id.ToString(), log.DateofCoding.ToString(), log.StartTime.ToString(), log.EndTime.ToString(), log.Duration.ToString());
